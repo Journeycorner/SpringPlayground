@@ -26,6 +26,7 @@ public class SensorReadingsController {
         return sensorDataService.findAllSensorData();
     }
 
+    // TODO replace String by LocalDateTime and fix mapping
     @RequestMapping("/findSensorDataBetweenDates")
     public Collection<SensorDataDto> findSensorDataBetweenDates(
             @RequestParam(value = "from", required = false) String f,

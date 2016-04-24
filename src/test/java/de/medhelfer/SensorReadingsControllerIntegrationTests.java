@@ -24,17 +24,12 @@ public class SensorReadingsControllerIntegrationTests {
 
     RestTemplate restTemplate = new RestTemplate();
 
-
-    //Collection<SensorDataDto> findAllSensorData();
-
-    //Collection<SensorDataDto> findSensorDataBetweenDates(LocalDateTime from, LocalDateTime to);
-
     //Collection<SensorDataDto> saveSensorReadings(Collection<SensorDataDto> sensorReadings);
 
     @Test
     public void findAllSensorData() {
         Collection<SensorDataDto> result = restTemplate.getForObject("http://localhost:8080/sensorReadings", Collection.class);
-        assertThat(result).isNotEmpty();
+        assertThat(result).hasSize(3861);
     }
 
     @Test
@@ -45,7 +40,7 @@ public class SensorReadingsControllerIntegrationTests {
                 LocalDateTime.of(2016,1,1,1,0,0),
                 LocalDateTime.of(2016,2,1,1,0,0));
 
-        assertThat(result).isNotEmpty();
+        assertThat(result).hasSize(308);
     }
 
 }

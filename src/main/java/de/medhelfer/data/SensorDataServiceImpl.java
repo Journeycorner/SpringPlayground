@@ -1,6 +1,8 @@
 package de.medhelfer.data;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
@@ -23,7 +25,8 @@ public class SensorDataServiceImpl implements SensorDataService {
                 Files.readAllBytes(Paths.get("sensor-readings.json"))
         );
         ObjectMapper mapper = new ObjectMapper();
-        sensorReadings = mapper.readValue(sensorReadingsJson, Collection.class);
+        mapper.registerModule(new JavaTimeModule());
+        sensorReadings = mapper.readValue(sensorReadingsJson, new TypeReference<Collection<SensorDataDto>>() { });
     }
 
     @Override
