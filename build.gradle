@@ -33,8 +33,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 //	runtime('com.h2database:h2')
 //	runtime('org.postgresql:postgresql')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile('javax.inject:javax.inject:1') // needed to support @Inject
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile 'org.assertj:assertj-core:3.4.1'
 }
 
 

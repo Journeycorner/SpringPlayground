@@ -28,8 +28,10 @@ public class SensorReadingsController {
 
     @RequestMapping("/findSensorDataBetweenDates")
     public Collection<SensorDataDto> findSensorDataBetweenDates(
-            @RequestParam(value = "from", required = false) LocalDateTime from,
-            @RequestParam(value = "to", required = false) LocalDateTime to) {
+            @RequestParam(value = "from", required = false) String f,
+            @RequestParam(value = "to", required = false) String t) {
+        LocalDateTime from = LocalDateTime.parse(f);
+        LocalDateTime to = LocalDateTime.parse(t);
         return sensorDataService.findSensorDataBetweenDates(
                 from != null ? from : LocalDateTime.MIN,
                 to != null ? to : LocalDateTime.MAX
