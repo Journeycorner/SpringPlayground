@@ -6,7 +6,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.ear
 
@@ -36,6 +36,7 @@ build
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
+.gradle
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
