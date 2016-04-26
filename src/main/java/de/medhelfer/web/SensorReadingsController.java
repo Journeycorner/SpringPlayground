@@ -40,8 +40,8 @@ public class SensorReadingsController {
     }
 
     @RequestMapping("/saveSensorReadings")
-    public Collection<SensorDataDto> saveSensorReadings(
+    public void saveSensorReadings(
             @RequestBody() Collection<SensorDataDto> sensorReadings) {
-        return sensorDataService.saveSensorReadings(sensorReadings);
+        sensorDataService.saveSensorReadings(sensorReadings);
     }
 }

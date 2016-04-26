@@ -8,5 +8,5 @@ public interface SensorDataService {
 
     Collection<SensorDataDto> findSensorDataBetweenDates(LocalDateTime from, LocalDateTime to);
 
-    Collection<SensorDataDto> saveSensorReadings(Collection<SensorDataDto> sensorReadings);
+    void saveSensorReadings(Collection<SensorDataDto> sensorReadings);
 }
