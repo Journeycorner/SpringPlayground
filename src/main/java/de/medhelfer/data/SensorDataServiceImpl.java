@@ -1,34 +1,32 @@
 package de.medhelfer.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
-@Controller
+@Service
+@Transactional
 public class SensorDataServiceImpl implements SensorDataService {
 
-    private final Collection<SensorDataDto> sensorReadings;
+    private final EntityManager em;
 
-    // TODO get data from data base
-    public SensorDataServiceImpl() throws IOException {
-        String sensorReadingsJson = new String(
-                Files.readAllBytes(Paths.get("sensor-readings.json"))
-        );
-        ObjectMapper mapper = new ObjectMapper();
-        sensorReadings = mapper.readValue(sensorReadingsJson, Collection.class);
+    @Autowired
+    public SensorDataServiceImpl(EntityManager em) {
+        this.em = em;
     }
 
     @Override
     public Collection<SensorDataDto> findAllSensorData() {
-        return sensorReadings;
+        return em.createNamedQuery(SensorData.FIND_ALL, SensorDataDto.class)
+                .getResultList();
     }
 
     @Override
@@ -41,8 +39,14 @@ public class SensorDataServiceImpl implements SensorDataService {
     }
 
     @Override
-    public Collection<SensorDataDto> saveSensorReadings(Collection<SensorDataDto> sensorReadings) {
-        // TODO save in db
-        return null;
+    public void saveSensorReadings(Collection<SensorDataDto> sensorReadings) {
+        if (CollectionUtils.isEmpty(sensorReadings))
+            return;
+
+        sensorReadings.stream()
+                .forEach(dto -> {
+                            em.persist(new SensorData(dto.getTimestamp(), dto.getTemperature(), dto.getHumidity()));
+                        }
+                );
     }
 }
