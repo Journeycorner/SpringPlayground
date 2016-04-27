@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
         query = "SELECT NEW de.medhelfer.data.SensorDataDto(s.timestamp, s.temperature, s.humidity) FROM SensorData s")
 public class SensorData {
 
-    public final static String FIND_ALL = "findAll";
+    public final static String FIND_ALL = "SensorData.findAll";
 
     @Id
     @GeneratedValue

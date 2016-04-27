@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = BackendApplication.class)
 @WebAppConfiguration
-public class BackendApplicationTests {
+public class SensorDataServiceTests {
 
 	@Autowired
 	SensorDataService sensorDataService;
