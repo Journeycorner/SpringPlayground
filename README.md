@@ -11,6 +11,7 @@ Stores sensor readings read by e.g. Raspberry Pi and serves it restfully.
 * start server, e.g. by bash:
 `./gradlew bootRun`
 
+
 ## Bugs / TODO
 
 * Hibernate java8-time-de-/serialization is not working
@@ -19,3 +20,4 @@ Stores sensor readings read by e.g. Raspberry Pi and serves it restfully.
 * feature: implement compression for dynamic content (e.g. Brotli)
 * setup postgres at medhelfer.de
 * setup server at medhelfer.de/sensor
+
