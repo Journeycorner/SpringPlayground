@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<User> findAllUsers() {
-        return em.createNamedQuery(User.FIND_ALL, User.class)
+        return em.createNamedQuery(User.QUERY_FIND_ALL, User.class)
                 .getResultList();
     }
 }

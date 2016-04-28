@@ -5,11 +5,20 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@NamedQuery(name=User.FIND_ALL,
-        query = "SELECT u FROM User u")
+@NamedQueries({
+        @NamedQuery(name = User.QUERY_FIND_ALL,
+                query = "SELECT u " +
+                        "FROM User u"),
+        @NamedQuery(name = User.QUERY_FIND_BY_USERNAME,
+                query = "SELECT u " +
+                        "FROM User u " +
+                        "WHERE username LIKE :username")
+})
 public class User {
 
-    public final static String FIND_ALL = "User.findAll";
+    public final static String QUERY_FIND_ALL = "User.findAll";
+    public final static String QUERY_FIND_BY_USERNAME = "User.findByUsername";
+    public final static String PARAM_USERNAME = ":username";
 
     @Id
     @GeneratedValue
@@ -23,7 +32,7 @@ public class User {
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="users_role")
+    @CollectionTable(name = "users_role")
     @Column(name = "role")
     private Set<Role> roles;
 
