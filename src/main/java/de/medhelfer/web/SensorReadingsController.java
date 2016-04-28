@@ -2,10 +2,7 @@ package de.medhelfer.web;
 
 import de.medhelfer.data.SensorDataDto;
 import de.medhelfer.data.SensorDataService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
@@ -21,12 +18,14 @@ public class SensorReadingsController {
         this.sensorDataService = sensorDataService;
     }
 
+    @CrossOrigin
     @RequestMapping("/sensorReadings")
     public Collection<SensorDataDto> findAllSensorReadings() {
         return sensorDataService.findAllSensorData();
     }
 
     // TODO replace String by LocalDateTime and fix mapping
+    @CrossOrigin
     @RequestMapping("/findSensorDataBetweenDates")
     public Collection<SensorDataDto> findSensorDataBetweenDates(
             @RequestParam(value = "from", required = false) String f,
@@ -39,6 +38,7 @@ public class SensorReadingsController {
         );
     }
 
+    @CrossOrigin
     @RequestMapping("/saveSensorReadings")
     public void saveSensorReadings(
             @RequestBody() Collection<SensorDataDto> sensorReadings) {
