@@ -30,14 +30,14 @@ public class SpringSecurityConfig {
         public void configure(WebSecurity web) throws Exception {
             web
                     .ignoring()
-                    .antMatchers("/authenticate");
+                    .antMatchers("/login");
         }
 
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/authenticate").permitAll()
-                    .antMatchers("/**").authenticated()
+                    .antMatchers("/fdtergtre").permitAll()
+                    //.antMatchers("/**").authenticated()
 //                    .anyRequest().authenticated()
                     .and().addFilterBefore(statelessAuthenticationFilter, (Class<? extends Filter>) UsernamePasswordAuthenticationFilter.class);
         }

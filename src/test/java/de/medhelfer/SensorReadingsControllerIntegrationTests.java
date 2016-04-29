@@ -26,14 +26,14 @@ public class SensorReadingsControllerIntegrationTests {
     RestTemplate restTemplate = new RestTemplate();
 
     @Test
-    @Ignore // FIXME result size
+    @Ignore // FIXME result size, test data
     public void findAllSensorData() {
         Collection<SensorDataDto> result = restTemplate.getForObject("http://localhost:8080/sensorReadings", Collection.class);
         assertThat(result).hasSize(3861);
     }
 
     @Test
-    @Ignore // FIXME result size
+    @Ignore // FIXME result size, test data
     public void findSensorDataBetweenDates() {
         Collection<SensorDataDto> result = restTemplate.getForObject(
                 "http://localhost:8080/findSensorDataBetweenDates?from={from}&to={to}",

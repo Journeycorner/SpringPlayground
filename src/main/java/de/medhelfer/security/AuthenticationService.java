@@ -1,22 +1,21 @@
 package de.medhelfer.security;
 
 import de.medhelfer.data.User;
-import de.medhelfer.web.UsernamePassword;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import de.medhelfer.data.UserService;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
+import java.security.Key;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.security.Key;
 
 @Service
 public class AuthenticationService {
@@ -24,60 +23,93 @@ public class AuthenticationService {
     // TODO replace by savely stored key
     private static Key KEY = MacProvider.generateKey();
 
-    private EntityManager em;
+    private UserService userService;
+    private PasswordEncoder passwordEncoder; // TODO configure globally
 
     @Autowired
-    public AuthenticationService(EntityManager em) {
-        this.em = em;
+    public AuthenticationService(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    /*
-    public SessionUser parseToken(String token) {
-        Claims body = Jwts.parser()
+    /**
+     * Parse user and data from a token, where it was previously stored and signed.
+     *
+     * @param token JWS Token without prefix
+     * @return {@link Authentication} parsed from the token
+     * @throws UnsupportedJwtException  if the {@code claimsJws} argument does not represent an Claims JWS
+     * @throws MalformedJwtException    if the {@code claimsJws} string is not a valid JWS
+     * @throws SignatureException       if the {@code claimsJws} JWS signature validation fails
+     * @throws ExpiredJwtException      if the specified JWT is a Claims JWT and the Claims has an expiration time
+     *                                  before the time this method is invoked.
+     * @throws IllegalArgumentException if the {@code claimsJws} string is {@code null} or empty or only whitespace
+     */
+    public Authentication parseToken(String token) {
+        final Claims body = Jwts.parser()
                 .setSigningKey(KEY)
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-
+        final Collection<GrantedAuthority> authorities = new ArrayList<>();
         @SuppressWarnings("unchecked")
         Collection<String> roles = body.get("roles", Collection.class);
         for (String role : roles) {
             authorities.add(() -> role);
         }
+        final String username = body.getSubject();
 
-        // build SessionUser object from token values
-        return new SessionUser(
-                body.get("sub", String.class),
-                "null",
-                true,
-                true,
-                true,
-                true,
-                authorities,
-                body.get("id", Number.class).longValue(),
-                body.get("firstname", String.class),
-                body.get("lastname", String.class),
-                body.get("email", String.class),
-                body.get("tfaSetupDone", Boolean.class),
-                body.get("timeZone", String.class)
-    }*/
+        return new Authentication() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return authorities;
+            }
 
-    public String createToken(UsernamePassword usernamePassword) {
-        User singleResult = em.createNamedQuery(User.QUERY_FIND_BY_USERNAME, User.class)
-                .setParameter(User.PARAM_USERNAME, usernamePassword.getUsername())
-                .getSingleResult();
+            @Override
+            public Object getCredentials() {
+                return null;
+            }
 
-        // TODO verify password
+            @Override
+            public Object getDetails() {
+                return null;
+            }
+
+            @Override
+            public Object getPrincipal() {
+                return null;
+            }
+
+            @Override
+            public boolean isAuthenticated() {
+                return true;
+            }
+
+            @Override
+            public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+            }
+
+            @Override
+            public String getName() {
+                return username;
+            }
+        };
+    }
+
+    public String createToken(String username, String password) {
+        User user = userService.findByUsername(username);
+
+        if (!passwordEncoder.matches(password, user.getPassword()))
+            return null;
 
         Claims extendedClaims = Jwts.claims();
-        extendedClaims.put("roles", singleResult.getRoles());
+        extendedClaims.put("roles", user.getRoles());
 
         return Jwts.builder()
                 .setClaims(extendedClaims)
                 .setExpiration(Date.from(Instant.now().plus(Duration.ofHours(12))))
                 .setIssuedAt(Date.from(Instant.now()))
-                .setSubject(singleResult.getUsername())
+                .setSubject(user.getUsername())
                 .signWith(SignatureAlgorithm.HS512, KEY)
                 .compact();
     }

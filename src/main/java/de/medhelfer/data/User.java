@@ -18,7 +18,7 @@ public class User {
 
     public final static String QUERY_FIND_ALL = "User.findAll";
     public final static String QUERY_FIND_BY_USERNAME = "User.findByUsername";
-    public final static String PARAM_USERNAME = ":username";
+    public final static String PARAM_USERNAME = "username";
 
     @Id
     @GeneratedValue
