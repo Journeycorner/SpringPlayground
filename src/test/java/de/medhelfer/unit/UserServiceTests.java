@@ -1,5 +1,6 @@
-package de.medhelfer;
+package de.medhelfer.unit;
 
+import de.medhelfer.BackendApplication;
 import de.medhelfer.data.Role;
 import de.medhelfer.data.User;
 import de.medhelfer.data.UserService;
@@ -31,8 +32,8 @@ public class UserServiceTests {
 	@Test
 	public void saveFindUsers() {
 		Set<Role> roles = new HashSet<>();
-		roles.add(Role.CLIENT);
-		roles.add(Role.SENSOR_READER);
+		roles.add(Role.ROLE_CLIENT);
+		roles.add(Role.ROLE_SENSOR_READER);
 		User toSave = new User("username", "password", roles);
 		userService.addUser(toSave);
 

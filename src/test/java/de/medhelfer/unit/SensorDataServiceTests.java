@@ -1,5 +1,6 @@
-package de.medhelfer;
+package de.medhelfer.unit;
 
+import de.medhelfer.BackendApplication;
 import de.medhelfer.data.SensorDataDto;
 import de.medhelfer.data.SensorDataService;
 import org.junit.Test;

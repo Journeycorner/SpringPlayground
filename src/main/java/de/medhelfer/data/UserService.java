@@ -5,4 +5,5 @@ import java.util.Collection;
 public interface UserService {
     void addUser(User user);
     Collection<User> findAllUsers();
+    User findByUsername(String username);
 }
