@@ -1,6 +1,7 @@
 package de.medhelfer.web;
 
 import de.medhelfer.security.AuthenticationService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -18,6 +19,8 @@ public class AuthenticationController {
     @CrossOrigin
     @RequestMapping("/login")
     public String login(String username, String password) {
-        return authenticationService.createToken(username, password);
+        return (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) ?
+                null :
+                authenticationService.createToken(username, password);
     }
 }

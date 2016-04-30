@@ -2,6 +2,7 @@ package de.medhelfer.web;
 
 import de.medhelfer.data.SensorDataDto;
 import de.medhelfer.data.SensorDataService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -18,13 +19,16 @@ public class SensorReadingsController {
         this.sensorDataService = sensorDataService;
     }
 
+    @Secured("ROLE_CLIENT") // TODO workaround for Spring not able to use enums in this annotation
     @CrossOrigin
     @RequestMapping("/sensorReadings")
     public Collection<SensorDataDto> findAllSensorReadings() {
         return sensorDataService.findAllSensorData();
     }
 
+
     // TODO replace String by LocalDateTime and fix mapping
+    @Secured("ROLE_CLIENT") // TODO workaround for Spring not able to use enums in this annotation
     @CrossOrigin
     @RequestMapping("/findSensorDataBetweenDates")
     public Collection<SensorDataDto> findSensorDataBetweenDates(
@@ -38,10 +42,10 @@ public class SensorReadingsController {
         );
     }
 
+    @Secured("ROLE_SENSOR_READER") // TODO workaround for Spring not able to use enums in this annotation
     @CrossOrigin
     @RequestMapping("/saveSensorReadings")
-    public void saveSensorReadings(
-            @RequestBody() Collection<SensorDataDto> sensorReadings) {
+    public void saveSensorReadings(@RequestBody() Collection<SensorDataDto> sensorReadings) {
         sensorDataService.saveSensorReadings(sensorReadings);
     }
 }

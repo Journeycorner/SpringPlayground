@@ -1,5 +1,6 @@
-package de.medhelfer;
+package de.medhelfer.integration;
 
+import de.medhelfer.BackendApplication;
 import de.medhelfer.data.SensorDataDto;
 import de.medhelfer.data.SensorDataService;
 import org.junit.Ignore;
@@ -26,7 +27,6 @@ public class SensorReadingsControllerIntegrationTests {
     RestTemplate restTemplate = new RestTemplate();
 
     @Test
-    @Ignore // FIXME result size, test data
     public void findAllSensorData() {
         Collection<SensorDataDto> result = restTemplate.getForObject("http://localhost:8080/sensorReadings", Collection.class);
         assertThat(result).hasSize(3861);

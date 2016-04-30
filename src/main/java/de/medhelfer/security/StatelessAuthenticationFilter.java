@@ -23,7 +23,10 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String header = ((HttpServletRequest) request).getHeader("X-AUTH-TOKEN");
+        HttpServletRequest request1 = (HttpServletRequest) request;
+        String servletPath = request1.getServletPath();
+        System.out.println(servletPath);
+        String header = request1.getHeader("X-AUTH-TOKEN");
 
         if (!StringUtils.isEmpty(header)) {
             // TODO reply with useful http error codes regarding the different runtime exceptions
