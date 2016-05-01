@@ -1,1 +1,0 @@
-INSERT INTO sensor_data (id, timestamp, temperature, humidity) VALUES (1, '2015-08-31T15:00:04.688432',26.9,0);
