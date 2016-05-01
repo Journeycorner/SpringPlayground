@@ -33,9 +33,11 @@ public class SensorDataServiceTests {
 	@Test
 	public void saveFindSensorReadings() {
 		Collection<SensorDataDto> toSave = new ArrayList<>();
-		toSave.add(new SensorDataDto(LocalDateTime.now(), 10f, 50f));
-		toSave.add(new SensorDataDto(LocalDateTime.now(), 20f, 50f));
-		toSave.add(new SensorDataDto(LocalDateTime.now(), 30f, 50f));
+		LocalDateTime now = LocalDateTime.now();
+		toSave.add(new SensorDataDto(now.minusHours(1), 10f, 50f));
+		toSave.add(new SensorDataDto(now.minusHours(2), 20f, 50f));
+		toSave.add(new SensorDataDto(now, 30f, 50f));
+		toSave.add(new SensorDataDto(now, 20f, 30f)); // mustn't get saved
 		sensorDataService.saveSensorReadings(toSave);
 
 		assertThat(sensorDataService.findAllSensorData()).hasSize(3);

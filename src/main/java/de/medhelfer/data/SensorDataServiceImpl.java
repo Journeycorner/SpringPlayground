@@ -43,7 +43,10 @@ public class SensorDataServiceImpl implements SensorDataService {
         if (CollectionUtils.isEmpty(sensorReadings))
             return;
 
+
         sensorReadings.stream()
+                .filter(dto -> !findAllSensorData().stream()
+                        .anyMatch(db -> db.getTimestamp().equals(dto.getTimestamp()))) // filter already added sensorreadings
                 .forEach(dto -> {
                             em.persist(new SensorData(dto.getTimestamp(), dto.getTemperature(), dto.getHumidity()));
                         }
