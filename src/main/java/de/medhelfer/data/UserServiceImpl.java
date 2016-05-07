@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.Collection;
 
 @Service
@@ -36,8 +37,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return em.createNamedQuery(User.QUERY_FIND_BY_USERNAME, User.class)
-                .setParameter(User.PARAM_USERNAME, username)
-                .getSingleResult();
+        try {
+            return em.createNamedQuery(User.QUERY_FIND_BY_USERNAME, User.class)
+                    .setParameter(User.PARAM_USERNAME, username)
+                    .getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
     }
 }

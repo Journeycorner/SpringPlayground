@@ -35,8 +35,7 @@ public class SpringSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/login").permitAll()
-                    .anyRequest().authenticated()
+                    .antMatchers("/login").anonymous()
                     .and().addFilterBefore(statelessAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         }
 

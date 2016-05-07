@@ -99,7 +99,8 @@ public class AuthenticationService {
     public String createToken(String username, String password) {
         User user = userService.findByUsername(username);
 
-        if (!passwordEncoder.matches(password, user.getPassword()))
+        if (user == null ||
+                !passwordEncoder.matches(password, user.getPassword()))
             return null;
 
         Claims extendedClaims = Jwts.claims();
