@@ -27,6 +27,7 @@ public class SensorReadingsControllerIntegrationTests {
     RestTemplate restTemplate = new RestTemplate();
 
     @Test
+    @Ignore
     public void findAllSensorData() {
         Collection<SensorDataDto> result = restTemplate.getForObject("http://localhost:8080/sensorReadings", Collection.class);
         assertThat(result).hasSize(3861);

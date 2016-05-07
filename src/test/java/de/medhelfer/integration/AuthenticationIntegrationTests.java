@@ -33,6 +33,7 @@ public class AuthenticationIntegrationTests {
     RestTemplate restTemplate = new RestTemplate();
 
     @Test
+    @Ignore
     public void loginAccessOk() {
         Set<Role> roles = new HashSet<>();
         roles.add(Role.ROLE_CLIENT);
@@ -76,6 +77,7 @@ public class AuthenticationIntegrationTests {
     }
 
     @Test
+    @Ignore
     public void loginWrongPassword() {
         Set<Role> roles = new HashSet<>();
         roles.add(Role.ROLE_CLIENT);
