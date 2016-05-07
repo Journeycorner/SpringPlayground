@@ -4,12 +4,12 @@ import de.medhelfer.data.User;
 import de.medhelfer.data.UserService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.security.Key;
 import java.time.Duration;
 import java.time.Instant;
@@ -26,7 +26,7 @@ public class AuthenticationService {
     private UserService userService;
     private PasswordEncoder passwordEncoder; // TODO configure globally
 
-    @Autowired
+    @Inject
     public AuthenticationService(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;

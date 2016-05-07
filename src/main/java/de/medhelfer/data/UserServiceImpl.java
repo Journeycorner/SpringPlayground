@@ -1,10 +1,10 @@
 package de.medhelfer.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import java.util.Collection;
@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private EntityManager em;
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Inject
     public UserServiceImpl(EntityManager em, PasswordEncoder passwordEncoder) {
         this.em = em;
         this.passwordEncoder = passwordEncoder;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
             return em.createNamedQuery(User.QUERY_FIND_BY_USERNAME, User.class)
                     .setParameter(User.PARAM_USERNAME, username)
                     .getSingleResult();
-        } catch(NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
     }

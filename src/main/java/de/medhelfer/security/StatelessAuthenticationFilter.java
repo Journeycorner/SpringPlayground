@@ -1,13 +1,16 @@
 package de.medhelfer.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import javax.servlet.*;
+import javax.inject.Inject;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -16,7 +19,7 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 
     private final AuthenticationService authenticationService;
 
-    @Autowired
+    @Inject
     public StatelessAuthenticationFilter(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
@@ -24,8 +27,6 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request1 = (HttpServletRequest) request;
-        String servletPath = request1.getServletPath();
-        System.out.println(servletPath);
         String header = request1.getHeader("X-AUTH-TOKEN");
 
         if (!StringUtils.isEmpty(header)) {

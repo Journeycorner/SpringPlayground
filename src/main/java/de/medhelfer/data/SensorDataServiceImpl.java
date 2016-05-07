@@ -1,10 +1,10 @@
 package de.medhelfer.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -18,7 +18,7 @@ public class SensorDataServiceImpl implements SensorDataService {
 
     private final EntityManager em;
 
-    @Autowired
+    @Inject
     public SensorDataServiceImpl(EntityManager em) {
         this.em = em;
     }
@@ -46,9 +46,8 @@ public class SensorDataServiceImpl implements SensorDataService {
         sensorReadings.stream()
                 .filter(dto -> !findAllSensorData().stream()
                         .anyMatch(db -> db.getTimestamp().equals(dto.getTimestamp()))) // filter already added sensorreadings
-                .forEach(dto -> {
-                            em.persist(new SensorData(dto.getTimestamp(), dto.getTemperature(), dto.getHumidity()));
-                        }
+                .forEach(dto ->
+                        em.persist(new SensorData(dto.getTimestamp(), dto.getTemperature(), dto.getHumidity()))
                 );
     }
 }

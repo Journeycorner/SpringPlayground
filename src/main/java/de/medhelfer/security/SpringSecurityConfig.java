@@ -1,6 +1,5 @@
 package de.medhelfer.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -12,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.inject.Inject;
+
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
@@ -20,7 +21,7 @@ public class SpringSecurityConfig {
     @EnableGlobalMethodSecurity(securedEnabled = true)
     public static class JwsSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
-        @Autowired
+        @Inject
         private StatelessAuthenticationFilter statelessAuthenticationFilter;
 
         // TODO why is it necessary to ignore all requests in order to avoid duplicate calls of statelessAuthenticationFilter?

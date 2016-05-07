@@ -7,7 +7,7 @@ import javax.persistence.NamedQuery;
 import java.time.LocalDateTime;
 
 @Entity
-@NamedQuery(name=SensorData.FIND_ALL,
+@NamedQuery(name = SensorData.FIND_ALL,
         query = "SELECT NEW de.medhelfer.data.SensorDataDto(s.timestamp, s.temperature, s.humidity) FROM SensorData s")
 public class SensorData {
 
@@ -20,7 +20,8 @@ public class SensorData {
     private float temperature;
     private float humidity;
 
-    public SensorData() {}
+    public SensorData() {
+    }
 
     public SensorData(LocalDateTime timestamp, float temperature, float humidity) {
         this.timestamp = timestamp;
