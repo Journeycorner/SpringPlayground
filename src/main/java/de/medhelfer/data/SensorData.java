@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @NamedQuery(name = SensorData.FIND_ALL,
-        query = "SELECT NEW de.medhelfer.data.SensorDataDto(s.timestamp, s.temperature, s.humidity) FROM SensorData s")
+        query = "SELECT NEW de.medhelfer.data.SensorDataDto(s.timestamp, s.temperature, s.humidity) " +
+                "FROM SensorData s")
 public class SensorData {
 
     public final static String FIND_ALL = "SensorData.findAll";

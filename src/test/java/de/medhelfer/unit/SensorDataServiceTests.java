@@ -5,25 +5,23 @@ import de.medhelfer.data.SensorDataDto;
 import de.medhelfer.data.SensorDataService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = BackendApplication.class)
 @WebAppConfiguration
 public class SensorDataServiceTests {
 
-	@Autowired
+	@Inject
 	SensorDataService sensorDataService;
 
 	@Test

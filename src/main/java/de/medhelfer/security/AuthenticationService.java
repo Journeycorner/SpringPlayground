@@ -21,10 +21,10 @@ import java.util.Date;
 public class AuthenticationService {
 
     // TODO replace by savely stored key
-    private static Key KEY = MacProvider.generateKey();
+    private static final Key KEY = MacProvider.generateKey();
 
-    private UserService userService;
-    private PasswordEncoder passwordEncoder; // TODO configure globally
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder; // TODO configure globally
 
     @Inject
     public AuthenticationService(UserService userService, PasswordEncoder passwordEncoder) {
