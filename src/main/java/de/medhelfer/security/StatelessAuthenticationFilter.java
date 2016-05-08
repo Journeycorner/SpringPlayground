@@ -1,5 +1,7 @@
 package de.medhelfer.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,7 @@ import java.io.IOException;
 @Component
 public class StatelessAuthenticationFilter extends GenericFilterBean {
 
+    private static final Logger log = LoggerFactory.getLogger(StatelessAuthenticationFilter.class);
     private final AuthenticationService authenticationService;
 
     @Inject
@@ -26,8 +29,10 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request1 = (HttpServletRequest) request;
-        String header = request1.getHeader("X-AUTH-TOKEN");
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String header = httpServletRequest.getHeader("X-AUTH-TOKEN");
+
+        log.info("Filtering: " + httpServletRequest.getRequestURL());
 
         if (!StringUtils.isEmpty(header)) {
             // TODO reply with useful http error codes regarding the different runtime exceptions
