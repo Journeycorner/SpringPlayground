@@ -21,6 +21,8 @@ Stores sensor readings read by e.g. Raspberry Pi and serves it restfully.
 * fix and extend unit and integration tests
 * exception handling and error codes for client
 * feature: implement compression for dynamic content (e.g. Brotli)
-* setup postgres at medhelfer.de
-* setup server at medhelfer.de/sensor
+* ~~setup postgres at medhelfer.de~~
+* ~~setup server at medhelfer.de/sensordata~~
+* enable tomcat logging @medhelfer
+* @Secured annotation not working
 
